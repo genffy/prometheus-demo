@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  # TODO 换成自己的监控服务器地址
+  # 这里还可以结合其他服务发现工具，比如 consul
+  - job_name: 'example-nodejs-app'
+    static_configs:
+      - targets: ['host.docker.internal:3002']
+rule_files:
+  - 'alert-rules.yml'
+alerting:
+  alertmanagers:
+    - scheme: http
+    - static_configs:
+        - targets: ['host.docker.internal:9093']

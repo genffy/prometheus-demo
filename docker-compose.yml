@@ -1,0 +1,26 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/tmp:/prometheus
+      - ./prometheus/config:/etc/prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml --log.level=debug
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/tmp:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alert-manager/tmp:/data
+      - ./alert-manager/config:/config
+    command: --config.file=/config/alertmanager.yml --log.level=debug
