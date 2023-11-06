@@ -2,7 +2,7 @@
 prometheus 监控学习
 
 ## demo
-![host.docker.internal](./images/host.docker.internal_3002.png)
+![host.docker.internal](./_monitor/images/host.docker.internal_3002.png)
 
 ## Consul 服务
 ### 注册
