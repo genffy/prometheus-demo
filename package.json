@@ -1,0 +1,36 @@
+{
+  "name": "prometheus-demo-www",
+  "description": "A better nuxt3 starter template",
+  "private": false,
+  "scripts": {
+    "dev": "nuxt dev --port 3002",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "serve": "NITRO_PORT=3002 tsx .output/server/index.mjs",
+    "clean": "rm -rf node_modules package-lock.json",
+    "preinstall": "npm run clean",
+    "reload": "pm2 startOrReload ecosystem.config.js --update-env",
+    "deploy": "npm run build && npm run reload"
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.2.112",
+    "@nuxt/devtools": "0.8.5",
+    "@pinia/nuxt": "^0.4.11",
+    "@unocss/nuxt": "^0.55.7",
+    "@unocss/reset": "^0.55.7",
+    "@vueuse/nuxt": "10.4.1",
+    "nuxi": "3.8.4",
+    "nuxt": "3.7.3",
+    "tsx": "^3.14.0",
+    "unplugin-icons": "^0.17.0",
+    "unplugin-vue-components": "^0.25.2"
+  },
+  "dependencies": {
+    "@nuxt/ui": "2.9.0",
+    "pinia": "^2.1.6",
+    "prom-client": "^15.0.0",
+    "vue-i18n": "^9.4.0"
+  }
+}

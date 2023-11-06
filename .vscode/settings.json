@@ -1,0 +1,15 @@
+{
+  "i18n-ally.localesPaths": [
+    "./locales"
+  ],
+  "i18n-ally.enabledParsers": [
+    "json"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.experimental.configFile": "tailwind.config.ts"
+}
