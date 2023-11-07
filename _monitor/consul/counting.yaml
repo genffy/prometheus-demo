@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: counting
+  namespace: default
+automountServiceAccountToken: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: counting
+  namespace: default
+  labels:
+    app: counting
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9001
+    targetPort: 9001
+  selector:
+    app: counting
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: counting
+  name: counting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: counting
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: 'true'
+      labels:
+        app: counting
+    spec:
+      serviceAccountName: counting
+      containers:
+      - name: counting
+        image: hashicorp/counting-service:0.0.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9001
