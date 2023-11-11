@@ -7,6 +7,32 @@ scrape_configs:
   - job_name: 'example-nodejs-app'
     static_configs:
       - targets: ['host.docker.internal:3002']
+  # prometheus 服务自身监控
+  # - job_name: 'prometheus'
+  #   metrics_path: /metrics
+  #   scheme: http
+  #   static_configs:
+  #     - targets: ['host.docker.internal:9090']
+  # consul 服务发现
+  - job_name: "consul-example"
+    consul_sd_configs:
+      - server:   'host.docker.internal:8500'
+        services: ['auth', 'api', 'load-balancer', 'postgres']
+        token: '{{ key "consul_token" }}'
+
+    relabel_configs:
+      - source_labels: ['__meta_consul_service']
+        regex:         '(.*)'
+        target_label:  'job'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_node']
+        regex:         '(.*)'
+        target_label:  'instance'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_tags']
+        regex:         ',(production|canary),'
+        target_label:  'group'
+        replacement:   '$1'
 rule_files:
   - 'alert-rules.yml'
 alerting:
